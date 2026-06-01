@@ -5,9 +5,25 @@ sns.set_theme(style='darkgrid')
 
 def chart1_pie(df):
     play_counts = df['play_type'].value_counts()
-    fig, ax = plt.subplots(figsize=(7, 7))
-    ax.pie(play_counts, labels=play_counts.index, autopct='%1.1f%%',
-           colors=sns.color_palette('Set2', len(play_counts)), startangle=90)
+    fig, ax = plt.subplots(figsize=(10, 8))
+    wedges, texts, autotexts = ax.pie(
+        play_counts,
+        autopct='%1.1f%%',
+        colors=sns.color_palette('Set2', len(play_counts)),
+        startangle=90,
+        pctdistance=0.75,
+        wedgeprops=dict(width=0.6)
+    )
+    for text in autotexts:
+        text.set_fontsize(9)
+    ax.legend(
+        wedges,
+        play_counts.index,
+        title="Play Types",
+        loc="center left",
+        bbox_to_anchor=(1, 0, 0.5, 1),
+        fontsize=10
+    )
     ax.set_title('Play Type Distribution', fontsize=14, fontweight='bold')
     plt.tight_layout()
     return fig
